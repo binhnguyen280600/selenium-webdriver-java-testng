@@ -3,7 +3,9 @@ package webdriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.locators.RelativeLocator;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -19,7 +21,7 @@ public class Topic_02_Selenium_Locator {
     public void beforeClass() {
         // khởi tạo biến driver lên
         driver = new FirefoxDriver();
-        driver.get("https://demo.nopcommerce.com/register");
+        driver.get("https://demo.nopcommerce.com/login?returnUrl=%2F");
     }
 
     @Test
@@ -89,7 +91,7 @@ public class Topic_02_Selenium_Locator {
     }
 
     @Test
-    public void TC_06_Xpath() {
+    public void TC_08_Xpath() {
         driver.findElement(By.xpath("//input[@id='small-searchterms']"));
         driver.findElement(By.xpath("//input[@id='Password']"));
         driver.findElement(By.xpath("//input[@id='Company']"));
@@ -109,6 +111,19 @@ public class Topic_02_Selenium_Locator {
         driver.findElement(By.xpath("//a"));
         driver.findElement(By.xpath("//button"));
         driver.findElement(By.xpath("//input"));
+    }
+    @Test
+    public void TC_09_Relative_locater() {
+        By passwordTextBoxBy = By.cssSelector("input#Password");
+        By rememberMe = By.id("RememberMe");
+        By forgotPassword = By.cssSelector("span.forgot-password");
+        By loginbtn = By.cssSelector("button.button-1");
+        WebElement rememberMeLabeltext = driver.findElement(RelativeLocator.with(By.tagName("label"))
+                .above(loginbtn)
+                .below(passwordTextBoxBy)
+                .toRightOf(rememberMe)
+                .toLeftOf(forgotPassword)
+        );
     }
 
     @AfterClass
